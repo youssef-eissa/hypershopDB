@@ -3,11 +3,11 @@ const router = express.Router();
 
 const usersData = [{
         id: 1,
-      name: "youssef eissa",
-      username: "aaaaa",
-      email: "aa@ds.commm",
-      password: "11111111",
-      carts: [
+        name: "youssef eissa",
+        username: "aaaaa",
+        email: "aa@ds.commm",
+        password: "11111111",
+        carts: [
         {
         id: 1,
         title: "iPhone 9",
@@ -28,9 +28,22 @@ const usersData = [{
         ]
         }
     ]
-    },]
+},
+
+]
 
 router.get('/users', (req, res) => {
     res.send(usersData);
 })
+
+router.get('/users/:id', (req, res) => {
+    const found = usersData.some(user => user.id === parseInt(req.params.id))
+    if(found){
+        res.json(usersData.filter(user => user.id === parseInt(req.params.id)))
+    }else{
+        res.status(400).json({msg:`no user with id ${req.params.id}`})
+    }
+
+})
+
 module.exports = router
