@@ -36,7 +36,48 @@ const usersData = [{
 router.get('/users', (req, res) => {
     res.send(usersData);
 })
+router.get('/users/:id', (req, res) => {
+    const found = usersData.some(user => user.id === parseInt(req.params.id))
+    if(found){
+        res.json(usersData.filter(user => user.id === parseInt(req.params.id)))
+    }else{
+        res.status(400).json({msg:`no user with id ${req.params.id}`})
+    }
 
+})
+router.post('/users', (req, res) => {
+    const newUser = {
+        id: uuid.v4(),
+        name: req.body.name,
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        carts: []
+    }
+    if(!newUser.name || !newUser.username || !newUser.email || !newUser.password){
+        return res.status(400).json({msg:"please add all fields"})
+    }
+    usersData.push(newUser)
+    res.json(usersData)
+
+})
+
+router.put('/users/:id', (req, res) => {
+    const found = usersData.some(user => user.id === parseInt(req.params.id))
+    if(found){
+        const updateUser = req.body
+        usersData.forEach(user => {
+            if(user.id === parseInt(req.params.id)){
+                user.name = updateUser.name ? updateUser.name : user.name
+                user.username = updateUser.username ? updateUser.username : user.username
+                user.email = updateUser.email ? updateUser.email : user.email
+                user.password = updateUser.password ? updateUser.password : user.password
+                user.carts = updateUser.carts ? updateUser.carts : user.carts
+                res.json({msg: 'user updated', user})
+            }
+        })
+    }
+})
 
 
 
