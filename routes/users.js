@@ -37,15 +37,7 @@ router.get('/users', (req, res) => {
     res.send(usersData);
 })
 
-router.get('/users/:id', (req, res) => {
-    const found = usersData.some(user => user.id === parseInt(req.params.id))
-    if(found){
-        res.json(usersData.filter(user => user.id === parseInt(req.params.id)))
-    }else{
-        res.status(400).json({msg:`no user with id ${req.params.id}`})
-    }
 
-})
 
 
 
