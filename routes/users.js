@@ -58,7 +58,8 @@ router.post('/users', (req, res) => {
         password: req.body.password,
         carts: []
     }
-    res.send([...usersData,newUser])
+    usersData.push(newUser)
+    res.send(usersData)
 
 })
 
