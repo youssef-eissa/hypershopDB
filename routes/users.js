@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const uuid=require('uuid')
+const uuid = require('uuid')
+
+
 
 const usersData = [{
         id: 1,
@@ -46,7 +48,9 @@ router.get('/users/:id', (req, res) => {
 
 })
 router.post('/users', (req, res) => {
-    const newUser = {
+    
+   
+    const newUser={
         id: uuid.v4(),
         name: req.body.name,
         username: req.body.username,
@@ -54,11 +58,7 @@ router.post('/users', (req, res) => {
         password: req.body.password,
         carts: []
     }
-    if(!newUser.name || !newUser.username || !newUser.email || !newUser.password){
-        return res.status(400).json({msg:"please add all fields"})
-    }
-    usersData.push(newUser)
-    res.json(usersData)
+    res.send([...usersData,newUser])
 
 })
 
