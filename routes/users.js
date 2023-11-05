@@ -25,7 +25,7 @@ router.get('/users/:id', (req, res) => {
 router.post('/users', (req, res) => {
 
     const newUser={
-        id: uuid.v4(),
+        id: usersData.length + 1,
         name: req.body.name,
         username: req.body.username,
         email: req.body.email,
