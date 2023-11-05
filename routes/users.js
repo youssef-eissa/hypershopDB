@@ -65,19 +65,22 @@ router.post('/users', (req, res) => {
 })
 
 router.put('/users/:id', (req, res) => {
-    const found = usersData.some(user => user.id === parseInt(req.params.id))
-    if(found){
-        const updateUser = req.body
-        usersData.forEach(user => {
-            if(user.id === parseInt(req.params.id)){
-                user.name = updateUser.name ? updateUser.name : user.name
-                user.username = updateUser.username ? updateUser.username : user.username
-                user.email = updateUser.email ? updateUser.email : user.email
-                user.password = updateUser.password ? updateUser.password : user.password
-                user.carts = updateUser.carts ? updateUser.carts : user.carts
-                res.json({msg: 'user updated', user})
-            }
-        })
+    let id = req.params.id
+    let name = req.body.name
+    let username = req.body.username
+    let email = req.body.email
+    let password = req.body.password
+    let carts = req.body.carts
+    let index = usersData.findIndex(user => user.id === parseInt(id))
+    if (index >= 0) {
+        let user = usersData[index]
+        user.name = name
+        user.username = username
+        user.email = email
+        user.password = password
+        user.carts = carts
+        res.send(user)
+        
     }
 })
 
