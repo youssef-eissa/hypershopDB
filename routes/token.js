@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/token', (req, res) => {
+router.post('/token', (req, res) => {
     res.send({
         token: 'test123'
     })
